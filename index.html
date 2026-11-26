@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بتانة (Batana) — محوّل PDF إلى Word الهندسي المحلي بدون OCR</title>
+  <meta name="description" content="قصة بناء تطبيق «بتانة» وموقعه خطوة بخطوة: محوّل محلي 100% لتحويل ملفات PDF العربية ومتعددة اللغات إلى مستندات Word قابلة للتحرير بدون OCR، مع الحفاظ على التشكيل والجداول والقياس الصادق." />
+  <meta property="og:title" content="بتانة — حين يعود النص العربي إلى أصله" />
+  <meta property="og:description" content="محوّل PDF إلى Word محلي بدون OCR، بقياس صادق للسلامة النصية والبنيوية. اكتشف الفكرة والتحديات ورحلة بناء البرنامج والموقع خطوة بخطوة." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 1. GLOBAL NAV (44px, pure black) -->
+  <header class="global-nav">
+    <div class="global-nav-inner">
+      <a class="gnav-brand" href="#top">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        <span>بتانة</span>
+      </a>
+
+      <nav class="gnav-links" aria-label="أقسام الموقع">
+        <a class="gnav-link active" href="#idea">الفكرة</a>
+        <a class="gnav-link" href="#problems">المشاكل والتحديات</a>
+        <a class="gnav-link" href="#program-journey">بناء البرنامج</a>
+        <a class="gnav-link" href="#interactive">استعراض تفاعلي</a>
+        <a class="gnav-link" href="#website-journey">بناء الموقع</a>
+        <a class="gnav-link" href="#fonts">معرض الخطوط</a>
+      </nav>
+
+      <span class="gnav-meta">محلي 100% · بدون OCR</span>
+
+      <button class="gnav-burger" id="burgerBtn" aria-label="فتح القائمة" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <a href="#idea" onclick="BatanaSite.closeDrawer()">الفكرة</a>
+    <a href="#problems" onclick="BatanaSite.closeDrawer()">المشاكل والتحديات</a>
+    <a href="#program-journey" onclick="BatanaSite.closeDrawer()">رحلة بناء البرنامج</a>
+    <a href="#interactive" onclick="BatanaSite.closeDrawer()">الاستعراض التفاعلي</a>
+    <a href="#website-journey" onclick="BatanaSite.closeDrawer()">كيف بنينا الموقع</a>
+    <a href="#fonts" onclick="BatanaSite.closeDrawer()">معرض الخطوط</a>
+  </div>
+
+  <!-- 2. SUB-NAV FROSTED (52px) -->
+  <div class="sub-nav">
+    <div class="sub-nav-inner">
+      <div class="sub-title">
+        <span>بتانة <span class="ltr">Batana</span></span>
+        <span class="sub-tag">قصة المنتج والهندسة</span>
+      </div>
+      <div class="sub-actions">
+        <a class="sub-link" href="#problems">التحديات</a>
+        <a class="sub-link" href="#program-journey">خطوات البرنامج</a>
+        <a class="sub-link" href="#website-journey">خطوات الموقع</a>
+        <a class="btn-pill compact" href="#interactive">جرّب المحاكاة</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="top">
+    <!-- ═══ TILE 1: PURE WHITE HERO + MUSEUM PEDESTAL STAGE ═══ -->
+    <section class="tile tile-light">
+      <div class="container center">
+        <div class="eyebrow">محوّل <span class="ltr">PDF</span> إلى <span class="ltr">Word</span> الهندسي · معالجة محلية 100% · بدون <span class="ltr">OCR</span></div>
+        <h1 class="t-hero">بتانة. حين يعود النص العربي إلى أصله.</h1>
+        <p class="t-lead">فكرة وُلدت من معاناة حقيقية مع المستندات العربية — وبُنيت بهندسة تحترم الحرف، التشكيل، البنية، والخصوصية.</p>
+
+        <div class="cta-group">
+          <a class="btn-hero" href="#program-journey">اقرأ قصة البناء خطوة بخطوة</a>
+          <a class="btn-ghost" href="#interactive">استكشف الأوضاع تفاعلياً ‹</a>
+        </div>
+
+        <!-- Museum Pedestal (the ONLY drop shadow in the entire site) -->
+        <div class="pedestal-wrap">
+          <button class="btn-circle" onclick="BatanaSite.stepSample(-1)" aria-label="العيّنة السابقة">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+
+          <div class="pedestal-canvas">
+            <div class="compare-toggle-row">
+              <div style="text-align:right;">
+                <strong id="sampleLabel" style="font-size:15px;color:var(--ink);">كتاب عربي مشكّل بالكامل</strong>
+                <div id="sampleMeta" style="font-size:13px;color:var(--ink-48);">نص رقمي أصلي · تشكيل كامل وتناسق سطور</div>
+              </div>
+              <div class="seg-switch" role="tablist" aria-label="مقارنة النتيجة">
+                <button id="btnViewBatana" class="seg-btn active blue" onclick="BatanaSite.setCompareMode('batana')">ناتج بتانة</button>
+                <button id="btnViewLegacy" class="seg-btn" onclick="BatanaSite.setCompareMode('legacy')">محوّل تقليدي</button>
+              </div>
+            </div>
+
+            <div class="dual-sheets">
+              <!-- Source PDF Sheet -->
+              <div class="doc-sheet">
+                <div>
+                  <div class="sheet-head">
+                    <span>المصدر · <span class="ltr">PDF</span> رقمي أصلي</span>
+                    <span id="srcBadge">طبقة نصية حقيقية</span>
+                  </div>
+                  <div id="srcTitle" class="sheet-title"></div>
+                  <div id="srcL1" class="sheet-line"></div>
+                  <div id="srcL2" class="sheet-line"></div>
+                </div>
+                <div class="sheet-foot">
+                  <span id="srcFont" class="ltr">Amiri</span>
+                  <span id="srcLang">عربي RTL</span>
+                </div>
+              </div>
+
+              <div class="arrow-badge" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+              </div>
+
+              <!-- Output Word Sheet -->
+              <div id="outSheet" class="doc-sheet target-batana">
+                <div>
+                  <div class="sheet-head">
+                    <span id="outHeadLeft" class="accent">الناتج · <span class="ltr">Word (.docx)</span></span>
+                    <span id="outHeadRight" class="ltr">Content Integrity A+</span>
+                  </div>
+                  <div id="outTitle" class="sheet-title"></div>
+                  <div id="outL1" class="sheet-line"></div>
+                  <div id="outL2" class="sheet-line"></div>
+                </div>
+                <div class="sheet-foot">
+                  <span id="outFootLeft">قابل للتحرير بالكامل</span>
+                  <span id="outFootRight">سليم 100%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pedestal-dots">
+              <div class="dot-strip" id="sampleDots"></div>
+              <div style="display:flex;gap:14px;align-items:center;">
+                <button class="link-blue" style="font-size:14px;" onclick="BatanaSite.stepSample(1)">استعرض النموذج التالي ‹</button>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-circle" onclick="BatanaSite.stepSample(1)" aria-label="العيّنة التالية">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TILE 2: DARK TILE 1 — THE IDEA ═══ -->
+    <section id="idea" class="tile tile-dark-1">
+      <div class="container center">
+        <div class="eyebrow">01 · الفكرة</div>
+        <h2 class="t-display">ملف الـ <span class="ltr">PDF</span> يملك النص بالفعل.<br/>فلماذا ندمّره بـ <span class="ltr">OCR</span>؟</h2>
+        <p class="t-airy">
+          أغلب الكتب الرقمية، الأبحاث الأكاديمية، والتقارير الحديثة تحتوي بالفعل على طبقة نصية حقيقية دقيقة. لكن المحوّلات الشائعة إما تحوّل الصفحات إلى صور وتعيد تخمين الحروف فتُفسد التشكيل والإملاء، أو تنسخ الحروف العربية مفككة ومقلوبة الاتجاه. من هنا وُلدت فكرة <strong>«بتانة»</strong>: قراءة البنية الهندسية واللغوية للمستند مباشرةً، وإعادة بنائه كملف <span class="ltr">Word</span> حقيقي قابل للتحرير — محلياً بالكامل على جهازك.
+        </p>
+
+        <div class="stats-trio">
+          <div class="dark-card">
+            <div class="stat-num"><span class="ltr">0%</span></div>
+            <h3>بدون <span class="ltr">OCR</span> مدمّر للنص</h3>
+            <p>استفادة مباشرة من الطبقة النصية الحقيقية داخل المستند للحفاظ على الحرف والتشكيل وعلامات الترقيم كما كُتبت.</p>
+          </div>
+          <div class="dark-card">
+            <div class="stat-num"><span class="ltr">100%</span></div>
+            <h3>معالجة محلية صافية</h3>
+            <p>لا خوادم سحابية ولا رفع للمستندات. كتبك، مخطوطاتك، وملفاتك الحساسة لا تغادر جهازك أبداً.</p>
+          </div>
+          <div class="dark-card">
+            <div class="stat-num">4</div>
+            <h3>أوضاع هندسية متخصصة</h3>
+            <p>اختيار ذكي يناسب طبيعة كل مستند: تحويل تلقائي، تطابق جداول وأعمدة، كتب عربية وشعر، أو حماية الرسم العثماني.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TILE 3: PARCHMENT TILE — THE REAL PROBLEMS WE FACED ═══ -->
+    <section id="problems" class="tile tile-parchment">
+      <div class="container">
+        <div class="center">
+          <div class="eyebrow">02 · المشاكل والتحديات الحقيقية</div>
+          <h2 class="t-display">أربع عقبات كبرى كسرت كل محوّل جربناه.</h2>
+          <p class="t-lead" style="margin-bottom:10px;">فهم المشكلة بدقة هو نصف الحل — وهذا ما واجهناه عملياً عند اختبار عشرات المستندات العربية والعلمية.</p>
+        </div>
+
+        <div class="problems-grid">
+          <article class="utility-card">
+            <span class="card-num">التحدي 01</span>
+            <h3>تصدّع النص العربي والتشكيل والاتجاه الثنائي</h3>
+            <div class="problem-box">
+              <span class="box-lbl">المشكلة</span>
+              ملفات <span class="ltr">PDF</span> مصممة للطباعة الثابتة، فتخزّن أماكن رسم الحروف بصرياً لا ترتيبها المنطقي. النتيجة المألوفة في المحوّلات العادية: كلمات مقطّعة، تشكيل مبعثر، وأقواس أو أرقام مقلوبة عند اختلاط العربية بالإنجليزية.
+            </div>
+            <div class="solution-box">
+              <span class="box-lbl">كيف عالجناها في «بتانة»</span>
+              بنينا مسار إعادة بناء لغوي وهندسي خاص يفهم طبيعة الكتابة العربية المتصلة وتداخل اللغتين (<span class="ltr">RTL / LTR</span>)، فيُنتج فقرات <span class="ltr">Word</span> سليمة الترتيب قابلة للتعديل الطبيعي مباشرة.
+            </div>
+          </article>
+
+          <article class="utility-card">
+            <span class="card-num">التحدي 02</span>
+            <h3>وهم "الدقة المرتفعة" وغياب القياس الصادق</h3>
+            <div class="problem-box">
+              <span class="box-lbl">المشكلة</span>
+              كثير من الأنظمة تعرض أرقاماً مطمئنة ومبالغاً فيها؛ مثل مقارنة البكسلات الخام على صفحات أغلبها خلفية بيضاء، أو خلط جودة نقل النص بمطابقة المظهر البصري فتبدو النتيجة ممتازة رغم وجود حرف مفقود أو انزياح واضح.
+            </div>
+            <div class="solution-box">
+              <span class="box-lbl">كيف عالجناها في «بتانة»</span>
+              اعتمدنا مبدأ <strong>القياس الصادق</strong>: فصل تام بين شهادة سلامة المحتوى (<span class="ltr">Content Integrity</span>) وبين التقييم البصري المستقل، مع مرجع تحقق نصي مستقل يكشف أي نقص أو زيادة بشفافية كاملة.
+            </div>
+          </article>
+
+          <article class="utility-card">
+            <span class="card-num">التحدي 03</span>
+            <h3>تنوع التخطيط: الجداول، الحواشي، الشعر، والخطوط</h3>
+            <div class="problem-box">
+              <span class="box-lbl">المشكلة</span>
+              الاعتماد على قالب تحويل واحد يُفسد التوازن؛ فديوان الشعر المشكّل بعمودين متقابلين يختلف جذرياً عن تقرير تقني مليء بالجداول والترويسات، كما أن غياب الخط الأصلي على جهاز المستخدم يغيّر شكل الصفحات.
+            </div>
+            <div class="solution-box">
+              <span class="box-lbl">كيف عالجناها في «بتانة»</span>
+              صمّمنا أربعة مسارات تحويل متخصصة تتعامل بذكاء مع الجداول، الفهارس، الحواشي السفلية، أبيات الشعر، والخطوط العربية الحرة القابلة للتضمين، ليختار المحرّك تلقائياً الأنسب لكل ملف.
+            </div>
+          </article>
+
+          <article class="utility-card">
+            <span class="card-num">التحدي 04</span>
+            <h3>خصوصية المستندات وسير العمل الاحترافي</h3>
+            <div class="problem-box">
+              <span class="box-lbl">المشكلة</span>
+              المؤلفون ودور النشر والباحثون يتعاملون مع كتب قيد التحقيق ووثائق خاصة لا يصح رفعها لخدمات سحابية، كما أن تحويل عشرات الملفات يدوياً عبر مواقع الويب بطيء ومُرهق.
+            </div>
+            <div class="solution-box">
+              <span class="box-lbl">كيف عالجناها في «بتانة»</span>
+              تطبيق سطح مكتب يعمل محلياً 100% بدون إنترنت، يدعم تحويل ملف فردي أو دفعة مجلدات كاملة بالتوازي، مع مكتبة مدمجة وتقارير تشخيص آمنة خالية تماماً من محتوى مستنداتك.
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TILE 4: DARK TILE 2 — HOW WE BUILT THE PROGRAM STEP BY STEP ═══ -->
+    <section id="program-journey" class="tile tile-dark-2">
+      <div class="container">
+        <div class="center">
+          <div class="eyebrow">03 · رحلة بناء البرنامج خطوة بخطوة</div>
+          <h2 class="t-display">خمس محطات حوّلت الفكرة إلى استوديو متكامل.</h2>
+          <p class="t-airy" style="margin-bottom:0;">اضغط على أي خطوة لاستعراض الهدف المعماري والدرس المستفاد في كل مرحلة من مراحل بناء «بتانة».</p>
+        </div>
+
+        <div class="timeline-layout">
+          <div class="timeline-nav" id="timelineNav" role="tablist" aria-label="مراحل بناء البرنامج"></div>
+
+          <div class="step-detail-panel" id="stepDetailPanel" role="tabpanel">
+            <div>
+              <div id="stepPhaseTag" class="eyebrow" style="margin-bottom:8px;">المرحلة 01</div>
+              <h3 id="stepTitle"></h3>
+              <p id="stepSummary"></p>
+            </div>
+            <div class="step-pillars">
+              <div class="pillar-mini">
+                <strong>ما الذي تعلّمناه في هذه الخطوة؟</strong>
+                <span id="stepLearned"></span>
+              </div>
+              <div class="pillar-mini">
+                <strong>النتيجة الملموسة للمستخدم</strong>
+                <span id="stepOutcome"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TILE 5: PURE WHITE — INTERACTIVE MODES & HONEST MEASUREMENT ═══ -->
+    <section id="interactive" class="tile tile-light">
+      <div class="container">
+        <div class="center">
+          <div class="eyebrow">04 · استعراض تفاعلي</div>
+          <h2 class="t-display">أربعة أوضاع ذكية. وشهادة لا تُجامِل.</h2>
+          <p class="t-lead" style="margin-bottom:8px;">جرّب التبديل بين أوضاع التحويل وشاهد كيف يفصل «بتانة» بصدق بين سلامة المحتوى والمطابقة البصرية.</p>
+        </div>
+
+        <div class="mode-chips" id="modeChips"></div>
+
+        <div class="cert-preview-card">
+          <div class="cert-top">
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--ink-48);">نموذج شهادة التحقق التفاعلي</div>
+              <strong id="certModeHeading" style="font-size:21px;color:var(--ink);">وضع موحّد (<span class="ltr">normalized</span>) — شهادة <span class="ltr">Content Integrity</span></strong>
+            </div>
+            <div class="seg-switch">
+              <button id="certBtnNorm" class="seg-btn active blue" onclick="BatanaSite.setCertMode('normalized')">وضع <span class="ltr">normalized</span></button>
+              <button id="certBtnFaith" class="seg-btn" onclick="BatanaSite.setCertMode('faithful')">وضع <span class="ltr">faithful</span></button>
+            </div>
+          </div>
+
+          <p id="certExplain" style="font-size:15px;color:var(--ink-80);margin-bottom:18px;"></p>
+
+          <div class="cert-badges">
+            <div class="cert-badge-box">
+              <div style="font-size:13px;font-weight:600;color:var(--ink-48);">الشارة 1 · سلامة النص</div>
+              <div class="cert-val"><span class="ltr">99.4%</span></div>
+              <div style="font-size:13px;color:var(--ink-48);">تحقق مستقل يقارن الحروف الظاهرة بين المصدر ومستند <span class="ltr">Word</span>.</div>
+            </div>
+            <div class="cert-badge-box">
+              <div style="font-size:13px;font-weight:600;color:var(--ink-48);">الشارة 2 · سلامة البنية</div>
+              <div class="cert-val"><span class="ltr">10 / 10</span></div>
+              <div style="font-size:13px;color:var(--ink-48);">توافق حزمة <span class="ltr">OpenXML</span>، الجداول، الحواشي، الفهارس، واتجاه القراءة.</div>
+            </div>
+            <div class="cert-badge-box">
+              <div id="certVisTitle" style="font-size:13px;font-weight:600;color:var(--ink-48);">الشارة 3 · التقييم البصري</div>
+              <div id="certVisVal" class="cert-val" style="font-size:22px;color:var(--ink-48);">غير مقيّم</div>
+              <div id="certVisDesc" style="font-size:13px;color:var(--ink-48);"><span class="ltr">Visual fidelity: not assessed in normalized mode</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TILE 6: DARK TILE 1 — HOW WE BUILT THIS WEBSITE STEP BY STEP ═══ -->
+    <section id="website-journey" class="tile tile-dark-1">
+      <div class="container center">
+        <div class="eyebrow">05 · قصة تصميم وبناء هذا الموقع</div>
+        <h2 class="t-display">كيف بنينا هذا الموقع خطوة بخطوة.</h2>
+        <p class="t-airy">لم نبدأ بكتابة شيفرة الموقع مباشرة؛ بل مررنا برحلة مقارنة وتجريب بصرية حقيقية لاختيار اللغة التصميمية الأصدق لطبيعة «بتانة».</p>
+
+        <div class="web-steps-grid">
+          <article class="web-step-card">
+            <div class="web-step-num">الخطوة 01 · التجريب والمقارنة</div>
+            <h3>بناء نموذجين تصميميين متباينين جنباً إلى جنب</h3>
+            <p>قبل الاعتماد، اختبرنا فلسفتين مختلفتين بالكامل على تطبيق «بتانة»: تصميم دافئ ببطاقات وشريط كبسولي، مقابل تصميم متحفي فائق الهدوء يعتمد التباين بين البلاطات الفاتحة والداكنة.</p>
+          </article>
+
+          <article class="web-step-card">
+            <div class="web-step-num">الخطوة 02 · القرار التصميمي</div>
+            <h3>اعتماد البساطة المتحفية لتتراجع الواجهة أمام النص</h3>
+            <p>اخترنا اللغة المتحفية لأن جوهر «بتانة» هو قداسة الحرف والمستند: ألوان محايدة <span class="ltr">(#ffffff · #f5f5f7 · #272729)</span>، لون تفاعلي أزرق واحد <span class="ltr">(#0066cc)</span>، وصفر تدرجات زخرفية أو ظلال مشتّتة.</p>
+          </article>
+
+          <article class="web-step-card">
+            <div class="web-step-num">الخطوة 03 · هندسة العربية والـ RTL</div>
+            <h3>إتقان الطباعة العربية وعزل المصطلحات اللاتينية</h3>
+            <p>استضفنا خطوطاً عربية حرة (<span class="ltr">Cairo</span> و <span class="ltr">Amiri</span>) محلياً، وطبقنا عزلاً دقيقاً للاتجاه الثنائي (<span class="ltr">Bidi Isolation</span>) على كل رقم ومصطلح تقني، مع فيزياء ضغط لطيفة وشريط زجاجي ضبابي.</p>
+          </article>
+
+          <article class="web-step-card">
+            <div class="web-step-num">الخطوة 04 · المراجعة البصرية والنشر</div>
+            <h3>فحص كل شاشة وإطلاق موقع ثابت فائق السرعة</h3>
+            <p>أجرينا مراجعة بصرية على مقاسات سطح المكتب والموبايل، وتأكدنا من العزل الكامل عن شيفرة البرنامج الخاصة، ثم جهّزنا مستودعاً نظيفاً منشوراً على <span class="ltr">GitHub</span> و <span class="ltr">Vercel</span> لتحميل فوري.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TILE 7: PARCHMENT — LIVE ARABIC FONT SPECIMEN GALLERY ═══ -->
+    <section id="fonts" class="tile tile-parchment">
+      <div class="container">
+        <div class="center">
+          <div class="eyebrow">06 · الخط العربي في قلب التجربة</div>
+          <h2 class="t-section">جرّب الخطوط العربية الحرة مباشرةً.</h2>
+          <p style="color:var(--ink-48);max-width:660px;margin:0 auto;">اكتب أي جملة عربية أو تشكيل وشاهد كيف تظهر بأربعة خطوط مفتوحة المصدر (<span class="ltr">SIL OFL</span>) مستضافة مباشرة داخل الموقع.</p>
+        </div>
+
+        <div class="font-controls">
+          <input id="fontInput" class="search-pill" value="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ — وَخَيْرُ جَلِيسٍ فِي الزَّمَانِ كِتَابُ | ١٢٣٤٥" aria-label="نص المعاينة" />
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn-pearl" data-fsize="18" onclick="BatanaSite.setFontSize(18, this)">18px</button>
+            <button class="btn-pearl active" data-fsize="24" onclick="BatanaSite.setFontSize(24, this)">24px</button>
+            <button class="btn-pearl" data-fsize="30" onclick="BatanaSite.setFontSize(30, this)">30px</button>
+          </div>
+        </div>
+
+        <div id="fontPresets" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;"></div>
+        <div id="fontGrid" class="font-grid"></div>
+      </div>
+    </section>
+
+    <!-- ═══ TILE 8: DARK PRIVACY STATEMENT (Apple Environment Cadence) ═══ -->
+    <section class="tile tile-dark-3">
+      <div class="container center">
+        <div class="eyebrow">مبدأ تأسيسي لا يتغير</div>
+        <h2 class="t-display">مستنداتك تبقى على جهازك. دائماً.</h2>
+        <p class="t-airy">
+          سواء كنت تحقّق كتاباً تراثياً مشكّلاً، أو تراجع بحثاً علمياً، أو تحوّل تقارير مؤسسية حساسة — «بتانة» مبنيّ ليعمل على جهازك فقط، بسرعة محلية وقياس صادق، دون أن يغادر حرف واحد مساحتك الخاصة.
+        </p>
+        <div class="cta-group" style="margin-bottom:0;">
+          <a class="btn-hero" href="#top">العودة إلى منصة المعاينة</a>
+          <a class="btn-ghost on-dark" href="#program-journey">مراجعة خطوات البناء ‹</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- APPLE DENSE PARCHMENT FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-note">
+        ملاحظة شفافية: هذا الموقع تعريفي وتفاعلي لشرح فكرة ومعمارية مشروع «بتانة» وتجربة تصميمه، ويحافظ على سرية التفاصيل التنفيذية الداخلية للمحرّك. جميع الخطوط العربية المعروضة (<span class="ltr">Amiri, Cairo, Noto Naskh Arabic, Scheherazade New</span>) مرخّصة بترخيص <span class="ltr">SIL Open Font License 1.1</span>.
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>استكشف القصة</h4>
+          <a href="#idea">الفكرة الأساسية</a>
+          <a href="#problems">المشاكل والتحديات</a>
+          <a href="#program-journey">رحلة بناء البرنامج</a>
+        </div>
+        <div>
+          <h4>التجربة التفاعلية</h4>
+          <a href="#top">منصة المقارنة <span class="ltr">PDF</span> إلى <span class="ltr">Word</span></a>
+          <a href="#interactive">الأوضاع والقياس الصادق</a>
+          <a href="#fonts">معرض الخطوط العربية</a>
+        </div>
+        <div>
+          <h4>حول الموقع</h4>
+          <a href="#website-journey">كيف بنينا هذا الموقع</a>
+          <a href="#top">العودة إلى الأعلى</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 بتانة (<span class="ltr">Batana</span>) — جميع الحقوق محفوظة</span>
+        <span>مصمّم للعربية <span class="ltr">RTL</span> · موقع ثابت فائق السرعة</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
