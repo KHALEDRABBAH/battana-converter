@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>بتانة (Batana) — ملفات PDF العربية، كما تستحق أن تعود إلى Word</title>
-  <meta name="description" content="قصة بناء تطبيق «بتانة» وموقعه خطوة بخطوة: محوّل PDF إلى Word محلي 100% بدون OCR يحفظ العربية والتشكيل والاتجاه الثنائي والجداول بقياس صادق." />
-  <meta property="og:title" content="بتانة — ملفات PDF العربية، كما تستحق أن تعود إلى Word" />
-  <meta property="og:description" content="جرّب الفرق المباشر بالسحب التفاعلي، واكتشف الفكرة والتحديات ورحلة بناء البرنامج والموقع خطوة بخطوة." />
+  <title>بتانة (Batana) — حوّل ملفات PDF العربية إلى Word بدقة استثنائية</title>
+  <meta name="description" content="حوّل ملفات PDF العربية وثنائية اللغة إلى مستندات Word (DOCX) قابلة للتعديل فوراً بدون OCR — يحافظ على التشكيل والاتجاه والجداول والحواشي." />
+  <meta property="og:title" content="بتانة — محوّل PDF العربي إلى Word بدون OCR" />
+  <meta property="og:description" content="ارفع ملف PDF العربي واحصل على مستند Word نظيف وقابل للتعديل في ثوانٍ." />
   <meta property="og:type" content="website" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <!-- 1. SINGLE ADAPTIVE FROSTED NAVIGATION BAR -->
   <header class="top-header" id="topHeader">
     <div class="nav-inner">
-      <a class="brand-link" href="#top">
+      <a class="brand-link" href="#converter">
         <span class="brand-glyph" aria-hidden="true">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
@@ -26,20 +26,21 @@
           </svg>
         </span>
         <span>بتانة</span>
+        <span class="brand-live-pill" id="navHealthPill" title="حالة محرك التحويل">
+          <span class="live-dot"></span>
+          <span id="navHealthText">جاهز</span>
+        </span>
       </a>
 
       <nav class="nav-links" aria-label="التنقل الرئيسي">
-        <a href="#top" class="active">المقارنة الحية</a>
-        <a href="#why">الفكرة والمشاكل</a>
-        <a href="#program">بناء البرنامج</a>
-        <a href="#playground">استوديو التجربة</a>
-        <a href="#website-story">بناء الموقع</a>
-        <a href="#fonts">الخطوط</a>
+        <a href="#converter" class="active">حوّل ملفك</a>
+        <a href="#compare">قبل وبعد</a>
+        <a href="#how">كيف يعمل؟</a>
       </nav>
 
       <div class="nav-right">
-        <a class="nav-cta" href="#playground">جرّب الأوضاع</a>
-        <button class="burger-btn" id="burgerBtn" aria-label="فتح القائمة" aria-expanded="false">
+        <button type="button" class="nav-cta" id="navUploadBtn">ارفع <span class="ltr">PDF</span></button>
+        <button type="button" class="burger-btn" id="burgerBtn" aria-label="فتح القائمة" aria-expanded="false">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 7h16M4 12h16M4 17h16"/>
           </svg>
@@ -50,32 +51,279 @@
   </header>
 
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <a href="#top" onclick="BatanaSite.closeMenu()">المقارنة الحية</a>
-    <a href="#why" onclick="BatanaSite.closeMenu()">الفكرة والمشاكل</a>
-    <a href="#program" onclick="BatanaSite.closeMenu()">رحلة بناء البرنامج</a>
-    <a href="#playground" onclick="BatanaSite.closeMenu()">استوديو التجربة</a>
-    <a href="#website-story" onclick="BatanaSite.closeMenu()">كيف بنينا الموقع</a>
-    <a href="#fonts" onclick="BatanaSite.closeMenu()">معرض الخطوط</a>
+    <a href="#converter" onclick="BatanaApp.closeMenu()">حوّل ملفك الآن</a>
+    <a href="#compare" onclick="BatanaApp.closeMenu()">المقارنة قبل وبعد</a>
+    <a href="#how" onclick="BatanaApp.closeMenu()">كيف يعمل بتانة؟</a>
   </div>
 
-  <main id="top">
-    <!-- ═══ SECTION 1: HERO + INTERACTIVE BEFORE/AFTER CURTAIN SLIDER ═══ -->
-    <section class="section hero-sec" data-nav="light">
+  <main>
+    <!-- ═══ SECTION 1: HERO CONVERTER STUDIO (FRONT & CENTER) ═══ -->
+    <section id="converter" class="section hero-sec" data-nav="light">
       <div class="wrap">
-        <div class="center-head" style="margin-bottom:34px;">
-          <div class="kicker">
-            <span class="kicker-pill"><span class="kicker-dot" style="display:inline-block;margin-left:6px;vertical-align:middle;"></span>محلي 100% على جهازك · بدون <span class="ltr">OCR</span></span>
+        <div class="hero-intro">
+          <div class="kicker-pill">
+            <span class="kicker-dot"></span>
+            <span>تحويل مباشر بدون <span class="ltr">OCR</span> · يحفظ التشكيل والاتجاه والجداول</span>
           </div>
-          <h1 class="h1-hero">بتانة.<br/><span class="subtle">ملفات <span class="ltr">PDF</span> العربية، كما تستحق أن تعود إلى <span class="ltr">Word</span>.</span></h1>
-          <p class="lead-copy">اسحب المؤشر أدناه لترى فوراً الفرق بين فوضى المحوّلات التقليدية وبين إعادة البناء الهندسية الصافية للنص العربي والتشكيل والجداول.</p>
-          <div class="hero-actions" style="margin-bottom:0;">
-            <a class="btn-primary" href="#program">اكتشف كيف بنينا البرنامج</a>
-            <a class="btn-outline" href="#why">لماذا تفشل المحوّلات الأخرى؟</a>
+          <h1 class="h1-hero">
+            حوّل ملف <span class="ltr">PDF</span> العربي إلى <span class="ltr">Word</span><br/>
+            <span class="subtle">بضغطة واحدة، بدون تشوّه.</span>
+          </h1>
+          <p class="lead-copy">
+            ارفع ملفك النصي الآن واحصل على مستند <span class="ltr">DOCX</span> قابل للتعديل خلال ثوانٍ — جاهز للطباعة والتحرير فوراً.
+          </p>
+        </div>
+
+        <!-- THE PRODUCTION CONVERTER CARD -->
+        <div class="converter-shell" id="converterShell">
+          <!-- Hidden file input -->
+          <input type="file" id="pdfFileInput" accept=".pdf,application/pdf" hidden />
+
+          <!-- STATE 1: UPLOAD & CONFIGURE -->
+          <div class="conv-view" id="viewUpload">
+            <!-- Dropzone (visible when no file is selected) -->
+            <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="اسحب ملف PDF هنا أو اضغط لاختيار ملف">
+              <div class="dropzone-icon" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <path d="M12 18v-6"/>
+                  <path d="M9 15l3-3 3 3"/>
+                </svg>
+              </div>
+              <div class="dropzone-title">اسحب ملف <span class="ltr">PDF</span> وأفلته هنا</div>
+              <div class="dropzone-sub">أو اختر ملفاً من جهازك مباشرةً</div>
+              <button type="button" class="btn-pick" id="pickFileBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span>اختر ملف <span class="ltr">PDF</span></span>
+              </button>
+              <div class="dropzone-limits">
+                <span>يدعم حتى <strong>20 ميجابايت</strong></span>
+                <span>·</span>
+                <span>حتى <strong>200 صفحة</strong></span>
+                <span>·</span>
+                <span>ملفات <span class="ltr">PDF</span> النصية العربية وثنائية اللغة</span>
+              </div>
+            </div>
+
+            <!-- Selected file card (visible after picking a file) -->
+            <div class="selected-file-card" id="selectedFileCard" hidden>
+              <div class="file-badge-icon" aria-hidden="true">PDF</div>
+              <div class="file-meta">
+                <div class="file-name" id="selectedFileName" dir="auto">document.pdf</div>
+                <div class="file-details" id="selectedFileSize">1.2 MB · جاهز للتحويل</div>
+              </div>
+              <button type="button" class="btn-change-file" id="changeFileBtn">تغيير الملف</button>
+              <button type="button" class="btn-remove-file" id="removeFileBtn" aria-label="إزالة الملف">✕</button>
+            </div>
+
+            <!-- Mode Selector (Simple 1-row pills, Smart Auto pre-selected) -->
+            <div class="mode-section">
+              <div class="mode-header">
+                <span class="mode-label">نمط التحويل</span>
+                <span class="mode-hint" id="modeHintText">يتعرّف تلقائياً على طبيعة المستند ويختار أفضل معالجة.</span>
+              </div>
+              <div class="mode-pills" id="modePills" role="radiogroup" aria-label="اختر نمط التحويل">
+                <button type="button" class="mode-pill active" data-mode="auto" role="radio" aria-checked="true">
+                  <span class="mp-title">تلقائي ذكي</span>
+                  <span class="mp-badge">موصى به</span>
+                </button>
+                <button type="button" class="mode-pill" data-mode="exact_layout" role="radio" aria-checked="false">
+                  <span class="mp-title">جداول وتقارير</span>
+                </button>
+                <button type="button" class="mode-pill" data-mode="book_flow" role="radio" aria-checked="false">
+                  <span class="mp-title">كتاب عربي وشعر</span>
+                </button>
+                <button type="button" class="mode-pill" data-mode="quran_uthmani" role="radio" aria-checked="false">
+                  <span class="mp-title">رسم عثماني</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Clear Privacy & Model Training Consent Box -->
+            <label class="consent-box" for="consentCheckbox">
+              <input type="checkbox" id="consentCheckbox" class="consent-input" />
+              <span class="consent-check-ui" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              <span class="consent-copy">
+                <strong>أوافق على حفظ نسخة من ملف الـ <span class="ltr">PDF</span> لتطوير وتدريب محرك «بتانة»</strong>
+                <small>تُستخدم النسخة المحفوظة فقط لتحسين دقة التحويل ومعالجة حالات النصوص العربية الصعبة. يُرجى عدم رفع مستندات مالية أو قانونية شديدة السرية.</small>
+              </span>
+            </label>
+
+            <!-- Inline Validation Alert -->
+            <div class="inline-alert" id="uploadAlert" role="alert" hidden></div>
+
+            <!-- Primary Convert Action -->
+            <button type="button" class="btn-convert-main" id="convertBtn" disabled>
+              <span>تحويل إلى <span class="ltr">Word (.docx)</span> الآن</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l-7 7 7 7"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- STATE 2: CONVERTING PROGRESS -->
+          <div class="conv-view" id="viewProgress" hidden>
+            <div class="progress-card">
+              <div class="progress-spinner" aria-hidden="true">
+                <div class="spinner-ring"></div>
+                <span class="spinner-glyph">ب</span>
+              </div>
+              <h2 class="progress-title" id="progressStageTitle">جاري رفع الملف بأمان...</h2>
+              <p class="progress-sub" id="progressFileMeta">document.pdf</p>
+
+              <div class="progress-bar-track" aria-hidden="true">
+                <div class="progress-bar-fill" id="progressBarFill"></div>
+              </div>
+
+              <div class="progress-steps-mini">
+                <span class="p-step active" id="pStep1">1. الرفع</span>
+                <span class="p-step" id="pStep2">2. إعادة بناء العربية</span>
+                <span class="p-step" id="pStep3">3. تجهيز Word</span>
+              </div>
+              <div class="progress-timer" id="progressTimer">00:00</div>
+            </div>
+          </div>
+
+          <!-- STATE 3: SUCCESS + DOWNLOAD + MANDATORY-VISIBILITY 1-5 STAR RATING -->
+          <div class="conv-view" id="viewResult" hidden>
+            <div class="result-banner">
+              <div class="result-check" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <div class="result-info">
+                <h2>تم تحويل ملفك بنجاح!</h2>
+                <div class="result-meta" id="resultMetaLine">document.docx · 12 صفحة · 1.8 ثانية</div>
+              </div>
+            </div>
+
+            <div class="result-actions">
+              <button type="button" class="btn-download-docx" id="downloadDocxBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>تحميل ملف <span class="ltr">Word (.docx)</span></span>
+              </button>
+              <button type="button" class="btn-another" id="convertAnotherBtn">تحويل ملف آخر</button>
+            </div>
+
+            <!-- POST-USE RATING & ISSUE FEEDBACK PANEL -->
+            <div class="rating-card" id="ratingCard">
+              <div class="rating-head">
+                <div>
+                  <h3>كيف كانت جودة ملف <span class="ltr">Word</span> الناتج؟</h3>
+                  <p>قيّم تجربتك بعد فتح الملف — وإذا كان التقييم أقل من 5 نجوم يمكنك كتابة المشكلة لنصلحها مباشرة.</p>
+                </div>
+                <span class="job-ref-pill ltr" id="resultJobId">BTN-000</span>
+              </div>
+
+              <div class="stars-row" id="starsRow" role="radiogroup" aria-label="تقييم جودة التحويل من 1 إلى 5 نجوم">
+                <button type="button" class="star-btn" data-star="1" aria-label="نجمة واحدة — سيئة جداً">★</button>
+                <button type="button" class="star-btn" data-star="2" aria-label="نجمتان — ضعيفة">★</button>
+                <button type="button" class="star-btn" data-star="3" aria-label="3 نجوم — مقبولة مع أخطاء">★</button>
+                <button type="button" class="star-btn" data-star="4" aria-label="4 نجوم — جيدة جداً">★</button>
+                <button type="button" class="star-btn" data-star="5" aria-label="5 نجوم — ممتازة">★</button>
+              </div>
+              <div class="star-caption" id="starCaption">اختر عدد النجوم لتقييم النتيجة</div>
+
+              <!-- Issue comment area (ONLY expanded when rating < 5) -->
+              <div class="issue-panel" id="issuePanel" hidden>
+                <div class="issue-label">ما المشكلة التي ظهرت في الملف؟ <span class="opt-tag">(اختياري لكنه يساعدنا كثيراً)</span></div>
+                <div class="issue-chips" id="issueChips">
+                  <button type="button" class="issue-chip" data-cat="arabic_shaping">تقطيع حروف عربية</button>
+                  <button type="button" class="issue-chip" data-cat="tashkeel">خلل في التشكيل</button>
+                  <button type="button" class="issue-chip" data-cat="bidi_numbers">انقلاب أرقام أو إنجليزي</button>
+                  <button type="button" class="issue-chip" data-cat="tables">مشكلة في الجداول</button>
+                  <button type="button" class="issue-chip" data-cat="layout_formatting">اختلاف التنسيق</button>
+                  <button type="button" class="issue-chip" data-cat="poetry_footnotes">شعر أو حواشي</button>
+                  <button type="button" class="issue-chip" data-cat="missing_content">محتوى أو صفحات ناقصة</button>
+                  <button type="button" class="issue-chip" data-cat="slow_or_other">مشكلة أخرى</button>
+                </div>
+                <textarea
+                  id="issueCommentInput"
+                  class="issue-textarea"
+                  rows="3"
+                  maxlength="2000"
+                  placeholder="اكتب تعليقك بالمشكلة هنا (مثلاً: الجدول في الصفحة 3 يحتاج ضبطاً، أو سقطت حركة في السطر الثاني)..."
+                ></textarea>
+              </div>
+
+              <!-- 5-star praise note -->
+              <div class="five-star-note" id="fiveStarNote" hidden>
+                رائع! يسعدنا جداً أن جودة التحويل أعجبتك. اضغط بالأسفل لتسجيل تقييمك.
+              </div>
+
+              <div class="inline-alert" id="feedbackAlert" role="alert" hidden></div>
+
+              <div class="rating-footer" id="ratingSubmitWrap" hidden>
+                <button type="button" class="btn-submit-rating" id="submitRatingBtn">إرسال التقييم</button>
+              </div>
+
+              <!-- Thank-you state after submitting -->
+              <div class="rating-thanks" id="ratingThanks" hidden>
+                <div class="thanks-icon" aria-hidden="true">✓</div>
+                <div>
+                  <strong>شكراً لتقييمك!</strong>
+                  <p id="ratingThanksMsg">تم تسجيل تقييمك وملاحظاتك بنجاح لمساعدتنا في تطوير «بتانة».</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE 4: ERROR STATE -->
+          <div class="conv-view" id="viewError" hidden>
+            <div class="error-card">
+              <div class="error-icon" aria-hidden="true">!</div>
+              <h3>تعذّر إكمال التحويل</h3>
+              <p id="errorMessageText">حدث خطأ غير متوقع أثناء معالجة الملف.</p>
+              <div class="error-actions">
+                <button type="button" class="btn-primary-sm" id="retryBtn">إعادة المحاولة</button>
+                <button type="button" class="btn-another" id="errorResetBtn">اختيار ملف آخر</button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Realistic Desktop Studio Frame + Live Draggable Comparison Curtain -->
-        <div class="studio-device">
+        <!-- Subtle Trust Bar directly under converter -->
+        <div class="trust-strip">
+          <div class="trust-item">
+            <span class="trust-dot green"></span>
+            <span>بدون <span class="ltr">OCR</span> — استخراج نصي مباشر</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-dot blue"></span>
+            <span>يحافظ على التشكيل واتجاه <span class="ltr">RTL / LTR</span></span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-dot indigo"></span>
+            <span>ملف <span class="ltr">DOCX</span> نظيف قابل للتعديل الكامل</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SECTION 2: TRUE BLACK OBSIDIAN — LIVE BEFORE/AFTER CURTAIN PROOF ═══ -->
+    <section id="compare" class="section dark-sec" data-nav="dark">
+      <div class="wrap">
+        <div class="center-head reveal">
+          <div class="kicker">شاهد الفرق بنفسك</div>
+          <h2 class="h2-title">قبل أن ترفع ملفك، جرّب الستارة التفاعلية.</h2>
+          <p class="lead-copy">اسحب الفاصل يميناً ويساراً لترى الفارق الحقيقي بين فوضى المحوّلات التقليدية وناتج «بتانة».</p>
+        </div>
+
+        <div class="studio-device reveal">
           <div class="device-titlebar">
             <div class="win-dots" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="device-doc-pill">
@@ -83,23 +331,20 @@
               <span>·</span>
               <span id="deviceDocMode">تلقائي ذكي</span>
             </div>
-            <div class="device-status">معالجة محلية</div>
+            <div class="device-status">معاينة حية</div>
           </div>
 
           <div class="curtain-stage" id="curtainStage" role="slider" aria-label="شريط مقارنة بين ناتج بتانة والمحوّل التقليدي" aria-valuemin="8" aria-valuemax="92" aria-valuenow="50" tabindex="0">
-            <!-- Left/Under Layer: Batana Clean Output -->
             <div class="curtain-layer layer-batana">
               <span class="layer-badge badge-batana">ناتج بتانة ✓</span>
               <div class="word-page-mockup" id="batanaPageContent"></div>
             </div>
 
-            <!-- Right/Clipped Overlay Layer: Legacy Broken Converter -->
             <div class="curtain-layer layer-legacy" id="legacyLayer">
               <span class="layer-badge badge-legacy">محوّل تقليدي ✕</span>
               <div class="word-page-mockup broken" id="legacyPageContent"></div>
             </div>
 
-            <!-- Draggable Handle -->
             <div class="curtain-divider" id="curtainDivider">
               <div class="curtain-knob" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
@@ -113,389 +358,76 @@
             <div class="sample-tabs" id="sampleTabs"></div>
             <div class="drag-hint">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>
-              <span>اسحب الفاصل يميناً ويساراً للمقارنة الفورية</span>
+              <span>اسحب الفاصل للمقارنة</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ SECTION 2: TRUE BLACK OBSIDIAN KEYNOTE BENTO — IDEA & REAL PROBLEMS ═══ -->
-    <section id="why" class="section dark-sec" data-nav="dark">
+    <!-- ═══ SECTION 3: SIMPLIFIED "HOW IT WORKS" (3 STEPS + 4 HIGHLIGHTS) ═══ -->
+    <section id="how" class="section light-sec" data-nav="light">
       <div class="wrap">
         <div class="center-head reveal">
-          <div class="kicker">01 · الفكرة والمشاكل الحقيقية</div>
-          <h2 class="h2-title">ملف الـ <span class="ltr">PDF</span> يملك النص بالفعل.<br/>المشكلة كانت في الطريقة.</h2>
-          <p class="lead-copy" style="margin-bottom:0;">أربع عقبات حقيقية كسرت كل محوّل جربناه على الكتب العربية والأوراق العلمية — وكيف غيّرت طريقة تفكيرنا بالكامل.</p>
+          <div class="kicker">كيف يعمل بتانة؟</div>
+          <h2 class="h2-title">ثلاث خطوات بسيطة. وهندسة عربية متخصصة.</h2>
+          <p class="lead-copy">لا نحول النص الرقمي إلى صور ثم نخمّنه — بل نقرأ بنية الـ <span class="ltr">PDF</span> الأصلية ونعيد بناءها كمستند <span class="ltr">Word</span> حقيقي.</p>
         </div>
 
-        <div class="bento-grid">
-          <!-- Wide Hero Bento: Why Zero-OCR -->
-          <article class="bento-card span-8 reveal">
-            <div>
-              <div class="bento-label">جوهر الفكرة</div>
-              <h3>لماذا نرفض تحويل النص الرقمي إلى صور وتخمينه بـ <span class="ltr">OCR</span>&#x200F;؟</h3>
-              <p>أغلب الكتب والتقارير الرقمية تحتوي بالفعل على طبقة نصية دقيقة. تحويلها إلى صور ثم إعادة قراءتها ضوئياً يدمّر التشكيل والإملاء بلا داعٍ. «بتانة» يقرأ بنية المستند الأصلية مباشرة ويبني منها مستند <span class="ltr">Word</span> حقيقياً.</p>
-            </div>
-            <div class="flow-compare-visual">
-              <div class="flow-lane bad">
-                <div class="flow-lane-head">✕ المسار التقليدي المدمّر</div>
-                <div class="flow-chips">
-                  <span class="f-node"><span class="ltr">PDF</span></span>
-                  <span class="f-arrow">←</span>
-                  <span class="f-node">تحويل لصور</span>
-                  <span class="f-arrow">←</span>
-                  <span class="f-node">تخمين <span class="ltr">OCR</span></span>
-                  <span class="f-arrow">←</span>
-                  <span class="f-node" style="color:#ff6961;">نص مشوّه</span>
-                </div>
-              </div>
-              <div class="flow-lane good">
-                <div class="flow-lane-head">✓ منهج «بتانة» الهندسي</div>
-                <div class="flow-chips">
-                  <span class="f-node"><span class="ltr">PDF</span></span>
-                  <span class="f-arrow">←</span>
-                  <span class="f-node">تحليل البنية</span>
-                  <span class="f-arrow">←</span>
-                  <span class="f-node">إعادة بناء عربية</span>
-                  <span class="f-arrow">←</span>
-                  <span class="f-node" style="color:#30d158;">Word أصلي</span>
-                </div>
-              </div>
-            </div>
+        <div class="steps-grid reveal">
+          <article class="step-card">
+            <div class="step-num">01</div>
+            <h3>ارفع ملف الـ <span class="ltr">PDF</span></h3>
+            <p>اسحب أي كتاب عربي أو تقرير أو ورقة علمية (حتى 20 ميجابايت)، واختر «تلقائي ذكي» أو النمط الأنسب لمستندك.</p>
           </article>
-
-          <!-- Metric Bento: 0% OCR & 100% Local -->
-          <article class="bento-card span-4 reveal">
-            <div>
-              <div class="bento-label">الخصوصية والأصالة</div>
-              <div class="hero-stat-num sky"><span class="ltr">100%</span></div>
-              <h3 style="margin-top:10px;">معالجة محلية صافية</h3>
-              <p>لا خوادم، لا رفع سحابي، لا إنترنت. مخطوطاتك وكتبك وملفاتك الحساسة تبقى داخل جهازك من البداية للنهاية.</p>
-            </div>
-            <div style="padding-top:14px;border-top:1px solid var(--rim-dark);display:flex;justify-content:space-between;font-size:13px;color:var(--on-dark-muted);">
-              <span>الاعتماد على <span class="ltr">OCR</span></span>
-              <strong style="color:#ffffff;" class="ltr">0%</strong>
-            </div>
+          <article class="step-card">
+            <div class="step-num">02</div>
+            <h3>إعادة بناء بلا <span class="ltr">OCR</span></h3>
+            <p>يعالج المحرك ترتيب القراءة المنطقي، الحروف المتصلة، التشكيل، الأقواس ثنائية الاتجاه، والجداول والحواشي تلقائياً.</p>
           </article>
-
-          <!-- Problem 1: Arabic Script & Bidi -->
-          <article class="bento-card span-6 reveal">
-            <div>
-              <div class="bento-label">المشكلة 01 · اللغة والاتجاه</div>
-              <h3>تصدّع العربية وانقلاب الأقواس والأرقام</h3>
-              <p>ملفات <span class="ltr">PDF</span> تحفظ مواضع الرسم البصرية لا ترتيب القراءة المنطقي؛ فتخرج الحروف مقطّعة والأقواس مقلوبة عند اختلاط العربية بالإنجليزية.</p>
-            </div>
-            <div class="mini-demo-strip">
-              <div class="demo-row">
-                <span class="tag-err">قبل</span>
-                <span style="font-family:var(--font-mono);color:#a1a1a6;font-size:13px;">)UTF-8( ةعابطلل 2.5 رادصلإا</span>
-              </div>
-              <div class="demo-row">
-                <span class="tag-ok">بتانة</span>
-                <span style="color:#ffffff;font-weight:500;">الإصدار 5.2 للطباعة <span class="ltr">(UTF-8)</span></span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Problem 2: Honest Measurement -->
-          <article class="bento-card span-6 reveal">
-            <div>
-              <div class="bento-label">المشكلة 02 · القياس الصادق</div>
-              <h3>خدعة «نسبة التطابق 95%» المضلّلة</h3>
-              <p>مقارنة البكسلات الخام تعطي درجات مرتفعة لمجرد أن معظم الصفحة أبيض! لذلك فصلنا بوضوح بين سلامة المحتوى (<span class="ltr">Content Integrity</span>) وبين التقييم البصري المستقل.</p>
-            </div>
-            <div class="bar-visual">
-              <div>
-                <div class="bar-row"><span>قياس بكسلات سطحي (يُخفي سقوط الحروف)</span><span style="color:var(--red-soft);">مضلّل</span></div>
-                <div class="bar-track"><div class="bar-fill" style="width:94%;background:rgba(255,69,58,0.55);"></div></div>
-              </div>
-              <div>
-                <div class="bar-row"><span>فصل شارات بتانة (نص مستقل · بنية · بصري منفصل)</span><span style="color:var(--green);">صادق</span></div>
-                <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--sky);"></div></div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Problem 3 & 4 Combined Wide Bento -->
-          <article class="bento-card span-12 reveal" style="flex-direction:row;flex-wrap:wrap;align-items:center;">
-            <div style="flex:1.2;min-width:260px;">
-              <div class="bento-label">المشكلة 03 و 04 · تنوّع المستندات والعمل الاحترافي</div>
-              <h3>قالب واحد لا يصلح لديوان شعر وجدول هندسي معاً</h3>
-              <p>الكتب العربية تحتاج فصولاً وحواشي وشعراً متناظراً، والتقارير تحتاج جداول وأعمدة دقيقة، والمصاحف تحتاج حماية صارمة للرموز — كلها ضمن تطبيق سطح مكتب محلي يدعم الدفعات المتوازية.</p>
-            </div>
-            <div style="flex:1;min-width:260px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-              <div class="flow-lane"><strong style="font-size:14px;color:#fff;display:block;margin-bottom:3px;">تلقائي ذكي</strong><span style="font-size:12.5px;color:var(--on-dark-muted);">توجيه آلي حسب بنية الملف</span></div>
-              <div class="flow-lane"><strong style="font-size:14px;color:#fff;display:block;margin-bottom:3px;">تطابق البنية</strong><span style="font-size:12.5px;color:var(--on-dark-muted);">جداول وأعمدة وترويسات</span></div>
-              <div class="flow-lane"><strong style="font-size:14px;color:#fff;display:block;margin-bottom:3px;">كتاب وشعر</strong><span style="font-size:12.5px;color:var(--on-dark-muted);">فصول، فهرس، حواشي، أبيات</span></div>
-              <div class="flow-lane"><strong style="font-size:14px;color:#fff;display:block;margin-bottom:3px;">رسم عثماني</strong><span style="font-size:12.5px;color:var(--on-dark-muted);">حماية صارمة بلا تطبيع مخلّ</span></div>
-            </div>
+          <article class="step-card">
+            <div class="step-num">03</div>
+            <h3>حمّل ملف <span class="ltr">Word</span> وقيّمه</h3>
+            <p>استلم ملف <span class="ltr">DOCX</span> جاهزاً للتعديل فوراً، وشاركنا تقييمك وملاحظاتك لتحسين دقة المحرك في كل إصدار.</p>
           </article>
         </div>
-      </div>
-    </section>
 
-    <!-- ═══ SECTION 3: PURE WHITE — HOW WE BUILT THE PROGRAM STEP BY STEP ═══ -->
-    <section id="program" class="section light-sec" data-nav="light">
-      <div class="wrap">
-        <div class="center-head reveal">
-          <div class="kicker">02 · رحلة بناء البرنامج خطوة بخطوة</div>
-          <h2 class="h2-title">خمس محطات حوّلت الفكرة إلى استوديو متكامل.</h2>
-          <p class="lead-copy" style="margin-bottom:0;">تنقّل بين الخطوات الخمس لترى المخطط المعماري والقرار الهندسي وراء كل مرحلة — بشفافية كاملة تحترم خصوصية الشيفرة.</p>
-        </div>
-
-        <div class="stepper-track" id="stepperTrack" role="tablist" aria-label="خطوات بناء البرنامج"></div>
-
-        <div class="journey-stage reveal" id="journeyStage" role="tabpanel">
-          <div class="journey-copy">
-            <div class="kicker" id="jPhase" style="margin-bottom:8px;">المرحلة 01</div>
-            <h3 id="jTitle"></h3>
-            <p id="jSummary"></p>
-            <div class="journey-notes">
-              <div class="j-note">
-                <strong>الدرس الهندسي</strong>
-                <span id="jLesson"></span>
-              </div>
-              <div class="j-note">
-                <strong>الأثر على المستخدم</strong>
-                <span id="jImpact"></span>
-              </div>
-            </div>
+        <div class="features-strip reveal">
+          <div class="feat-mini">
+            <h4>تشكيل وحروف سليمة</h4>
+            <p>معالجة دقيقة للتنوين والشدة وأشكال الحروف العربية دون تقطيع أو قلب للكلمات.</p>
           </div>
-
-          <div class="journey-schematic" id="jSchematic" aria-label="مخطط معماري توضيحي للمرحلة"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ SECTION 4: PARCHMENT — INTERACTIVE PLAYGROUND (EVERY CLICK UPDATES LIVE!) ═══ -->
-    <section id="playground" class="section parchment-sec" data-nav="light">
-      <div class="wrap">
-        <div class="center-head reveal">
-          <div class="kicker">03 · استوديو التجربة التفاعلي</div>
-          <h2 class="h2-title">اختر نمطاً. وشاهد البنية تتكيّف فوراً.</h2>
-          <p class="lead-copy" style="margin-bottom:0;">كل وضع يغيّر طريقة تعامل «بتانة» مع التخطيط والخطوط والتدقيق — جرّب النقر على الأوضاع الأربعة أدناه.</p>
-        </div>
-
-        <div class="studio-split reveal">
-          <div class="mode-stack" id="modeStack"></div>
-
-          <div class="live-mode-preview">
-            <div>
-              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;">
-                <div>
-                  <span id="pvTag" class="mode-chip-badge">موصى به</span>
-                  <h3 id="pvTitle" style="font-size:22px;font-weight:700;margin-top:8px;">تلقائي ذكي</h3>
-                </div>
-                <span id="pvTarget" style="font-size:13px;color:var(--ink-muted);">للمستندات المتنوعة</span>
-              </div>
-              <p id="pvDesc" style="font-size:15px;color:var(--ink-secondary);margin-bottom:18px;"></p>
-
-              <div class="preview-doc-canvas">
-                <div class="preview-paper" id="pvPaper"></div>
-              </div>
-            </div>
-
-            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:14px;border-top:1px solid var(--rim-light);font-size:13px;color:var(--ink-muted);">
-              <span id="pvRule1">✓ اتجاه قراءة تلقائي</span>
-              <span id="pvRule2">✓ فحص بنية OpenXML</span>
-              <span id="pvRule3">✓ معالجة محلية 100%</span>
-            </div>
+          <div class="feat-mini">
+            <h4>توازن عربي وإنجليزي</h4>
+            <p>يحافظ على استقامة الأرقام والأقواس والمصطلحات اللاتينية داخل الفقرات العربية.</p>
+          </div>
+          <div class="feat-mini">
+            <h4>جداول وشعر ورسم عثماني</h4>
+            <p>أنماط مخصصة للجداول القابلة للتعديل، الأبيات الشعرية، وحماية النصوص القرآنية.</p>
+          </div>
+          <div class="feat-mini">
+            <h4>تطوير مستمر من تقييمك</h4>
+            <p>كل ملاحظة ترسلها عند التقييم تساعد فريقنا الهندسي على تحسين المحرك وتدريبه بدقة أعلى.</p>
           </div>
         </div>
 
-        <!-- Interactive Honest Certificate Mode Switcher -->
-        <div class="cert-panel reveal">
-          <div class="cert-header">
-            <div>
-              <div style="font-size:12.5px;font-weight:600;color:var(--blue);margin-bottom:3px;">شهادة القياس الصادق التفاعلية</div>
-              <h3 id="certHeading" style="font-size:21px;font-weight:700;">الوضع الموحّد (<span class="ltr">normalized</span>) — سلامة المحتوى فقط</h3>
-            </div>
-            <div class="seg-control">
-              <button id="cBtnNorm" class="seg-opt active" onclick="BatanaSite.setCert('normalized')">وضع <span class="ltr">normalized</span></button>
-              <button id="cBtnFaith" class="seg-opt" onclick="BatanaSite.setCert('faithful')">وضع <span class="ltr">faithful</span></button>
-            </div>
-          </div>
-
-          <p id="certNote" style="font-size:15px;color:var(--ink-secondary);margin-bottom:20px;"></p>
-
-          <div class="cert-trio">
-            <div class="cert-tile">
-              <div style="font-size:12.5px;font-weight:600;color:var(--ink-muted);">1 · سلامة النص المستقل</div>
-              <div class="cert-tile-num"><span class="ltr">99.4%</span></div>
-              <div style="font-size:13px;color:var(--ink-secondary);">جرد ومقارنة مستقلة للحروف الظاهرة بين المصدر ومستند <span class="ltr">Word</span>.</div>
-            </div>
-            <div class="cert-tile">
-              <div style="font-size:12.5px;font-weight:600;color:var(--ink-muted);">2 · سلامة البنية</div>
-              <div class="cert-tile-num"><span class="ltr">10 / 10</span></div>
-              <div style="font-size:13px;color:var(--ink-secondary);">توافق حزمة <span class="ltr">OpenXML</span>، الحواشي، الفهارس، الجداول، واتجاه القراءة.</div>
-            </div>
-            <div class="cert-tile">
-              <div style="font-size:12.5px;font-weight:600;color:var(--ink-muted);">3 · المطابقة البصرية</div>
-              <div id="certVisNum" class="cert-tile-num" style="font-size:22px;color:var(--ink-muted);padding-top:6px;">غير مقيّم</div>
-              <div id="certVisCopy" style="font-size:13px;color:var(--ink-secondary);"><span class="ltr">Visual fidelity: not assessed in normalized mode</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ SECTION 5: TRUE BLACK — HOW WE BUILT THIS WEBSITE STEP BY STEP ═══ -->
-    <section id="website-story" class="section dark-sec" data-nav="dark">
-      <div class="wrap">
-        <div class="center-head reveal">
-          <div class="kicker">04 · كيف بنينا هذا الموقع خطوة بخطوة</div>
-          <h2 class="h2-title">لم نكتفِ بأول مسودة.<br/>قارنّا، نقدنا، وأعدنا البناء.</h2>
-          <p class="lead-copy" style="margin-bottom:0;">قصة حقيقية لتطور تصميم هذا الموقع من نموذجين تجريبيين إلى هذه النسخة الإنتاجية التفاعلية.</p>
-        </div>
-
-        <div class="design-story-grid">
-          <article class="bento-card reveal">
-            <div>
-              <div class="bento-label">الخطوة 01 · استكشاف لغتين تصميميتين</div>
-              <h3>مقارنة حية بين فلسفتين متباينتين</h3>
-              <p>بدأنا ببناء نموذجين تجريبيين متكاملين جنباً إلى جنب: تصميم دافئ ببطاقات وشريط كبسولي، مقابل تصميم متحفي هادئ يتنفس بالتباين المساحي. اخترنا الهدوء المتحفي ليترك المسرح للنص.</p>
-            </div>
-            <div class="story-visual-box">
-              <div class="proto-mini-split">
-                <div class="mini-frame" style="color:var(--on-dark-muted);">
-                  <div style="font-weight:600;margin-bottom:4px;">نموذج تجريبي A</div>
-                  <div>بطاقات وشريط كبسولي دافئ</div>
-                </div>
-                <div class="mini-frame picked">
-                  <div style="font-weight:700;color:var(--sky);margin-bottom:4px;">✓ النموذج المعتمد</div>
-                  <div style="color:#ffffff;">معرض متحفي متباين وهادئ</div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="bento-card reveal">
-            <div>
-              <div class="bento-label">الخطوة 02 · التباين ونظام الألوان</div>
-              <h3>إصلاح المساحات الباهتة نحو نظام Bento واضح</h3>
-              <p>بعد المعاينة الحية اكتشفنا أن الرمادي القريب يُخفي حدود البطاقات؛ فانتقلنا إلى أسود عميق مع بطاقات بارزة بحافة رفيعة جداً ولون أزرق تفاعلي واحد يحمل كل نقطة فعل.</p>
-            </div>
-            <div class="story-visual-box">
-              <div class="swatch-row">
-                <div class="swatch-chip" style="background:#000000;color:#ffffff;">أسود صافي</div>
-                <div class="swatch-chip" style="background:#16161a;color:#a1a1a6;">بطاقة داكنة</div>
-                <div class="swatch-chip" style="background:#f5f5f7;color:#1d1d1f;">ورقي هادئ</div>
-                <div class="swatch-chip" style="background:#ffffff;color:#1d1d1f;">أبيض نقي</div>
-                <div class="swatch-chip" style="background:#0066cc;color:#ffffff;">أزرق الفعل</div>
-              </div>
-            </div>
-          </article>
-
-          <article class="bento-card reveal">
-            <div>
-              <div class="bento-label">الخطوة 03 · طباعة عربية سليمة 100%</div>
-              <h3>خط عربي منضبط دون تباعد يكسر الاتصال</h3>
-              <p>تخلّينا عن أي تقليص مصطنع لمسافات الأحرف يفسد اتصال الحرف العربي، واعتمدنا <span class="ltr">IBM Plex Sans Arabic</span> للواجهة مع <span class="ltr">Amiri</span> للنماذج التحريرية، وعزل تام لاتجاه الأرقام والمصطلحات.</p>
-            </div>
-            <div class="story-visual-box" style="justify-content:space-between;gap:14px;">
-              <div style="text-align:right;">
-                <div style="font-size:11px;color:var(--sky);font-weight:600;">واجهة حديثة</div>
-                <div style="font-size:21px;font-weight:700;color:#ffffff;">بتانة للنص العربي</div>
-              </div>
-              <div style="width:1px;height:44px;background:var(--rim-dark);"></div>
-              <div style="text-align:right;">
-                <div style="font-size:11px;color:var(--on-dark-muted);font-weight:600;">معاينة الكتب</div>
-                <div style="font-family:var(--font-book);font-size:22px;color:#ffffff;">بِسْمِ اللَّهِ الرَّحْمَٰنِ</div>
-              </div>
-            </div>
-          </article>
-
-          <article class="bento-card reveal">
-            <div>
-              <div class="bento-label">الخطوة 04 · التفاعل والنشر السريع</div>
-              <h3>ستارة مقارنة حية، وعزل كامل عن سر المهنة</h3>
-              <p>حوّلنا الواجهة من مقاطع ساكنة إلى تجربة لمسية: شريط سحب للمقارنة الفورية، مخططات معمارية حيّة، وفحص آلي يمنع أي تسريب لشيفرة التطبيق قبل النشر على <span class="ltr">GitHub</span> و <span class="ltr">Vercel</span>.</p>
-            </div>
-            <div class="story-visual-box">
-              <div class="flow-chips" style="justify-content:center;">
-                <span class="f-node">فحص بصري حي</span>
-                <span class="f-arrow">←</span>
-                <span class="f-node">عزل الشيفرة</span>
-                <span class="f-arrow">←</span>
-                <span class="f-node"><span class="ltr">GitHub</span></span>
-                <span class="f-arrow">←</span>
-                <span class="f-node" style="color:var(--green);border-color:rgba(48,209,88,0.4);"><span class="ltr">Vercel Edge</span></span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ SECTION 6: PURE WHITE — LIVE ARABIC TYPOGRAPHY PLAYGROUND ═══ -->
-    <section id="fonts" class="section light-sec" data-nav="light">
-      <div class="wrap">
-        <div class="center-head reveal" style="margin-bottom:34px;">
-          <div class="kicker">05 · مختبر الخط العربي</div>
-          <h2 class="h2-title">اكتب نصاً. واختبر جماليات الخط العربي فوراً.</h2>
-          <p class="lead-copy" style="margin-bottom:0;">أربعة خطوط عربية مفتوحة المصدر (<span class="ltr">SIL OFL 1.1</span>) بتحميل سريع بصيغة <span class="ltr">WOFF2</span>.</p>
-        </div>
-
-        <div class="font-bar reveal">
-          <input id="fontInput" class="font-input" value="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ — وَخَيْرُ جَلِيسٍ فِي الزَّمَانِ كِتَابُ" aria-label="نص معاينة الخطوط" />
-          <div class="seg-control">
-            <button class="seg-opt" data-sz="18" onclick="BatanaSite.setSize(18, this)">18px</button>
-            <button class="seg-opt active" data-sz="22" onclick="BatanaSite.setSize(22, this)">22px</button>
-            <button class="seg-opt" data-sz="28" onclick="BatanaSite.setSize(28, this)">28px</button>
-          </div>
-        </div>
-
-        <div class="preset-row reveal" id="fontPresets"></div>
-        <div class="fonts-grid reveal" id="fontsGrid"></div>
-      </div>
-    </section>
-
-    <!-- ═══ SECTION 7: COMPACT DARK FINALE ═══ -->
-    <section class="section dark-sec" data-nav="dark" style="padding:84px 24px;">
-      <div class="wrap narrow" style="text-align:center;">
-        <div class="kicker">مبدأ لا يقبل المساومة</div>
-        <h2 class="h2-title">مستنداتك تبقى على جهازك. دائماً.</h2>
-        <p class="lead-copy">دقّة هندسية للعربية، قياس صادق بلا تجميل، وخصوصية محلية 100% — مصمّمة للباحثين، المحققين، ودور النشر.</p>
-        <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-          <a class="btn-primary" href="#top">جرّب ستارة المقارنة مجدداً</a>
-          <a class="btn-outline on-dark" href="https://github.com/KHALEDRABBAH/battana-converter" target="_blank" rel="noopener">مستودع الموقع على <span class="ltr">GitHub</span> ↗</a>
+        <div class="bottom-cta reveal">
+          <h3>جاهز لتجربة ملفك الآن؟</h3>
+          <button type="button" class="btn-primary" id="bottomUploadBtn">ارفع ملف <span class="ltr">PDF</span> وابدأ التحويل</button>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer" data-nav="light">
-    <div class="wrap">
-      <div class="footer-top-note">
-        هذا الموقع تعريفي وتفاعلي لعرض فكرة ومعمارية مشروع «بتانة» وقصة تصميمه، ومعزول بالكامل عن الشيفرة الداخلية لتطبيق سطح المكتب. جميع الخطوط العربية المستخدمة (<span class="ltr">IBM Plex Sans Arabic, Amiri, Cairo, Noto Naskh Arabic, Scheherazade New</span>) مرخّصة بترخيص <span class="ltr">SIL Open Font License 1.1</span>.
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <div class="footer-brand">
+        <strong>بتانة (Batana)</strong> — تحويل ملفات <span class="ltr">PDF</span> العربية إلى <span class="ltr">Word</span> بدون <span class="ltr">OCR</span>.
       </div>
-      <div class="footer-grid">
-        <div>
-          <h4>بتانة (<span class="ltr">Batana</span>)</h4>
-          <p style="font-size:13.5px;color:var(--ink-muted);max-width:290px;">محوّل <span class="ltr">PDF</span> إلى <span class="ltr">Word</span> هندسي محلي بالكامل بدون <span class="ltr">OCR</span>، بُني لاحترام الحرف العربي والتشكيل والخصوصية.</p>
-        </div>
-        <div>
-          <h4>القصة والهندسة</h4>
-          <a href="#why">الفكرة والمشاكل الحقيقية</a>
-          <a href="#program">بناء البرنامج خطوة بخطوة</a>
-          <a href="#website-story">كيف بنينا هذا الموقع</a>
-        </div>
-        <div>
-          <h4>التجربة التفاعلية</h4>
-          <a href="#top">ستارة المقارنة الحية</a>
-          <a href="#playground">استوديو الأوضاع والشهادة</a>
-          <a href="#fonts">مختبر الخطوط العربية</a>
-        </div>
-        <div>
-          <h4>المستودع</h4>
-          <a href="https://github.com/KHALEDRABBAH/battana-converter" target="_blank" rel="noopener"><span class="ltr">GitHub Repository</span> ↗</a>
-          <a href="#top">العودة إلى الأعلى</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 بتانة (<span class="ltr">Batana</span>) — جميع الحقوق محفوظة</span>
-        <span>مصمّم للعربية <span class="ltr">RTL</span> · أداء ثابت فائق السرعة</span>
+      <div class="footer-links">
+        <a href="#converter">حوّل ملفك</a>
+        <a href="#compare">قبل وبعد</a>
+        <a href="#how">كيف يعمل؟</a>
       </div>
     </div>
   </footer>

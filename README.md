@@ -1,15 +1,21 @@
-# بتانة (Batana) — الموقع التعريفي والدراسة الهندسية
+# بتانة (Batana) — Web Converter Frontend
 
-الموقع الرسمي التعريفي لمشروع **«بتانة»** — محوّل مستندات PDF الرقمية إلى Word (`.docx`) محلياً بالكامل بدون OCR، مع تركيز هندسي خاص على اللغة العربية والتشكيل والاتجاه الثنائي (`RTL/Bidi`) والجداول والقياس الصادق.
+Public production web interface for **Batana** Arabic PDF-to-Word conversion (`https://battana-converter.vercel.app`).
 
-## ماذا يعرض الموقع؟
-- **الفكرة:** لماذا تفشل أدوات التحويل التقليدية مع المستندات العربية الرقمية، ولماذا يعتمد «بتانة» على إعادة بناء الطبقة النصية الحقيقية محلياً بدون OCR.
-- **التحديات والمشاكل الحقيقية:** عرض واضح لأبرز العقبات الهندسية في النصوص العربية، البنية المعقدة، القياس الصادق، والخصوصية المحلية.
-- **رحلة بناء البرنامج خطوة بخطوة:** تسلسل المراحل المعمارية من النواة الأولية وحتى تجربة سطح المكتب ومنظومة التدقيق.
-- **رحلة تصميم وبناء الموقع خطوة بخطوة:** كيف انتقلنا من مقارنة لغتين تصميميتين إلى اعتماد اللغة المتحفية الهادئة وتطبيقها بالكامل باللغة العربية (`RTL`).
-- **معاينات تفاعلية حية:** منصة مقارنة تفاعلية `PDF → Word`، استكشاف أوضاع التحويل الأربعة، شهادة القياس الصادق (`normalized` مقابل `faithful`)، ومعرض الخطوط العربية المفتوحة (`Amiri`، `Cairo`، `Noto Naskh Arabic`، `Scheherazade New`).
+## Architecture & Security
 
-## البنية التقنية للموقع
-- موقع ثابت فائق السرعة (`HTML5 + CSS3 + Vanilla JS`) بدون أي حزم خارجية أو تتبع.
-- خطوط عربية مفتوحة المصدر (`SIL OFL 1.1`) بصيغة `WOFF2` عبر Google Fonts وترويسات أمان عبر `vercel.json`.
-- معزول بالكامل عن شيفرة تطبيق سطح المكتب الخاصة.
+- **Public Frontend & Gateway (`batana-website`):** Static HTML/CSS/JS + lightweight Vercel Functions (`/api/convert`, `/api/feedback`, `/api/blob-upload`, `/api/health`) that securely proxy requests to the private cloud engine using server-only environment variables (`ENGINE_API_URL`, `ENGINE_API_SECRET`).
+- **Large File Support:** Files up to 20 MB are supported seamlessly via temporary private Vercel Blob storage (deleted automatically right after conversion).
+- **Zero Proprietary Code in Public Repo:** All conversion logic lives strictly inside a separate private backend service.
+
+## Environment Variables (Vercel Project Settings)
+
+| Variable | Type | Purpose |
+| --- | --- | --- |
+| `ENGINE_API_URL` | Plain | Base URL of the private conversion engine service |
+| `ENGINE_API_SECRET` | Secret | Shared server-to-server gateway key |
+| `BLOB_READ_WRITE_TOKEN` | Secret | Auto-provisioned by private Vercel Blob store |
+
+## Fonts
+
+Arabic web fonts (`IBM Plex Sans Arabic`, `Amiri`, `Noto Naskh Arabic`, `Scheherazade New`) are served under the **SIL Open Font License 1.1** (see `OFL-NOTICE.md`).

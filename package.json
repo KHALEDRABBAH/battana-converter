@@ -1,0 +1,10 @@
+{
+  "name": "battana-converter-web",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@vercel/blob": "^2.9.0",
+    "@vercel/functions": "^3.11.4"
+  }
+}
