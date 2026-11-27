@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>بتانة (Batana) — حوّل ملفات PDF العربية إلى Word بدقة استثنائية</title>
-  <meta name="description" content="حوّل ملفات PDF العربية وثنائية اللغة إلى مستندات Word (DOCX) قابلة للتعديل فوراً بدون OCR — يحافظ على التشكيل والاتجاه والجداول والحواشي." />
+  <meta name="description"
+    content="حوّل ملفات PDF العربية وثنائية اللغة إلى مستندات Word (DOCX) قابلة للتعديل فوراً بدون OCR — يحافظ على التشكيل والاتجاه والجداول والحواشي." />
   <meta property="og:title" content="بتانة — محوّل PDF العربي إلى Word بدون OCR" />
   <meta property="og:description" content="ارفع ملف PDF العربي واحصل على مستند Word نظيف وقابل للتعديل في ثوانٍ." />
   <meta property="og:type" content="website" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <!-- 1. SINGLE ADAPTIVE FROSTED NAVIGATION BAR -->
   <header class="top-header" id="topHeader">
@@ -21,8 +26,8 @@
       <a class="brand-link" href="#converter">
         <span class="brand-glyph" aria-hidden="true">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
           </svg>
         </span>
         <span>بتانة</span>
@@ -42,7 +47,7 @@
         <button type="button" class="nav-cta" id="navUploadBtn">ارفع <span class="ltr">PDF</span></button>
         <button type="button" class="burger-btn" id="burgerBtn" aria-label="فتح القائمة" aria-expanded="false">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 7h16M4 12h16M4 17h16"/>
+            <path d="M4 7h16M4 12h16M4 17h16" />
           </svg>
         </button>
       </div>
@@ -66,11 +71,12 @@
             <span>تحويل مباشر بدون <span class="ltr">OCR</span> · يحفظ التشكيل والاتجاه والجداول</span>
           </div>
           <h1 class="h1-hero">
-            حوّل ملف <span class="ltr">PDF</span> العربي إلى <span class="ltr">Word</span><br/>
+            حوّل ملف <span class="ltr">PDF</span> العربي إلى <span class="ltr">Word</span><br />
             <span class="subtle">بضغطة واحدة، بدون تشوّه.</span>
           </h1>
           <p class="lead-copy">
-            ارفع ملفك النصي الآن واحصل على مستند <span class="ltr">DOCX</span> قابل للتعديل خلال ثوانٍ — جاهز للطباعة والتحرير فوراً.
+            ارفع ملفك النصي الآن واحصل على مستند <span class="ltr">DOCX</span> قابل للتعديل خلال ثوانٍ — جاهز للطباعة
+            والتحرير فوراً.
           </p>
         </div>
 
@@ -82,29 +88,31 @@
           <!-- STATE 1: UPLOAD & CONFIGURE -->
           <div class="conv-view" id="viewUpload">
             <!-- Dropzone (visible when no file is selected) -->
-            <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="اسحب ملف PDF هنا أو اضغط لاختيار ملف">
+            <div class="dropzone" id="dropzone" role="button" tabindex="0"
+              aria-label="اسحب ملف PDF هنا أو اضغط لاختيار ملف">
               <div class="dropzone-icon" aria-hidden="true">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                  <polyline points="14 2 14 8 20 8"/>
-                  <path d="M12 18v-6"/>
-                  <path d="M9 15l3-3 3 3"/>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <path d="M12 18v-6" />
+                  <path d="M9 15l3-3 3 3" />
                 </svg>
               </div>
               <div class="dropzone-title">اسحب ملف <span class="ltr">PDF</span> وأفلته هنا</div>
               <div class="dropzone-sub">أو اختر ملفاً من جهازك مباشرةً</div>
               <button type="button" class="btn-pick" id="pickFileBtn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                  <polyline points="17 8 12 3 7 8"/>
-                  <line x1="12" y1="3" x2="12" y2="15"/>
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
                 </svg>
                 <span>اختر ملف <span class="ltr">PDF</span></span>
               </button>
               <div class="dropzone-limits">
-                <span>يدعم حتى <strong>20 ميجابايت</strong></span>
+                <span>يدعم حتى <strong>50 ميجابايت</strong></span>
                 <span>·</span>
-                <span>حتى <strong>200 صفحة</strong></span>
+                <span>حتى <strong>600 صفحة</strong></span>
                 <span>·</span>
                 <span>ملفات <span class="ltr">PDF</span> النصية العربية وثنائية اللغة</span>
               </div>
@@ -114,7 +122,7 @@
             <div class="selected-file-card" id="selectedFileCard" hidden>
               <div class="file-badge-icon" aria-hidden="true">PDF</div>
               <div class="file-meta">
-                <div class="file-name" id="selectedFileName" dir="auto">document.pdf</div>
+                <div class="file-name" id="selectedFileName">document.pdf</div>
                 <div class="file-details" id="selectedFileSize">1.2 MB · جاهز للتحويل</div>
               </div>
               <button type="button" class="btn-change-file" id="changeFileBtn">تغيير الملف</button>
@@ -148,13 +156,15 @@
             <label class="consent-box" for="consentCheckbox">
               <input type="checkbox" id="consentCheckbox" class="consent-input" />
               <span class="consent-check-ui" aria-hidden="true">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="20 6 9 17 4 12"/>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
                 </svg>
               </span>
               <span class="consent-copy">
                 <strong>أوافق على حفظ نسخة من ملف الـ <span class="ltr">PDF</span> لتطوير وتدريب محرك «بتانة»</strong>
-                <small>تُستخدم النسخة المحفوظة فقط لتحسين دقة التحويل ومعالجة حالات النصوص العربية الصعبة. يُرجى عدم رفع مستندات مالية أو قانونية شديدة السرية.</small>
+                <small>تُستخدم النسخة المحفوظة فقط لتحسين دقة التحويل ومعالجة حالات النصوص العربية الصعبة. يُرجى عدم رفع
+                  مستندات مالية أو قانونية شديدة السرية.</small>
               </span>
             </label>
 
@@ -165,7 +175,7 @@
             <button type="button" class="btn-convert-main" id="convertBtn" disabled>
               <span>تحويل إلى <span class="ltr">Word (.docx)</span> الآن</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M5 12h14M12 5l-7 7 7 7"/>
+                <path d="M5 12h14M12 5l-7 7 7 7" />
               </svg>
             </button>
           </div>
@@ -197,8 +207,9 @@
           <div class="conv-view" id="viewResult" hidden>
             <div class="result-banner">
               <div class="result-check" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="20 6 9 17 4 12"/>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
               <div class="result-info">
@@ -210,9 +221,9 @@
             <div class="result-actions">
               <button type="button" class="btn-download-docx" id="downloadDocxBtn">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                  <polyline points="7 10 12 15 17 10"/>
-                  <line x1="12" y1="15" x2="12" y2="3"/>
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
                 <span>تحميل ملف <span class="ltr">Word (.docx)</span></span>
               </button>
@@ -240,7 +251,8 @@
 
               <!-- Issue comment area (ONLY expanded when rating < 5) -->
               <div class="issue-panel" id="issuePanel" hidden>
-                <div class="issue-label">ما المشكلة التي ظهرت في الملف؟ <span class="opt-tag">(اختياري لكنه يساعدنا كثيراً)</span></div>
+                <div class="issue-label">ما المشكلة التي ظهرت في الملف؟ <span class="opt-tag">(اختياري لكنه يساعدنا
+                    كثيراً)</span></div>
                 <div class="issue-chips" id="issueChips">
                   <button type="button" class="issue-chip" data-cat="arabic_shaping">تقطيع حروف عربية</button>
                   <button type="button" class="issue-chip" data-cat="tashkeel">خلل في التشكيل</button>
@@ -251,13 +263,8 @@
                   <button type="button" class="issue-chip" data-cat="missing_content">محتوى أو صفحات ناقصة</button>
                   <button type="button" class="issue-chip" data-cat="slow_or_other">مشكلة أخرى</button>
                 </div>
-                <textarea
-                  id="issueCommentInput"
-                  class="issue-textarea"
-                  rows="3"
-                  maxlength="2000"
-                  placeholder="اكتب تعليقك بالمشكلة هنا (مثلاً: الجدول في الصفحة 3 يحتاج ضبطاً، أو سقطت حركة في السطر الثاني)..."
-                ></textarea>
+                <textarea id="issueCommentInput" class="issue-textarea" rows="3" maxlength="2000"
+                  placeholder="اكتب تعليقك بالمشكلة هنا (مثلاً: الجدول في الصفحة 3 يحتاج ضبطاً، أو سقطت حركة في السطر الثاني)..."></textarea>
               </div>
 
               <!-- 5-star praise note -->
@@ -320,7 +327,8 @@
         <div class="center-head reveal">
           <div class="kicker">شاهد الفرق بنفسك</div>
           <h2 class="h2-title">قبل أن ترفع ملفك، جرّب الستارة التفاعلية.</h2>
-          <p class="lead-copy">اسحب الفاصل يميناً ويساراً لترى الفارق الحقيقي بين فوضى المحوّلات التقليدية وناتج «بتانة».</p>
+          <p class="lead-copy">اسحب الفاصل يميناً ويساراً لترى الفارق الحقيقي بين فوضى المحوّلات التقليدية وناتج
+            «بتانة».</p>
         </div>
 
         <div class="studio-device reveal">
@@ -334,7 +342,9 @@
             <div class="device-status">معاينة حية</div>
           </div>
 
-          <div class="curtain-stage" id="curtainStage" role="slider" aria-label="شريط مقارنة بين ناتج بتانة والمحوّل التقليدي" aria-valuemin="8" aria-valuemax="92" aria-valuenow="50" tabindex="0">
+          <div class="curtain-stage" id="curtainStage" role="slider"
+            aria-label="شريط مقارنة بين ناتج بتانة والمحوّل التقليدي" aria-valuemin="8" aria-valuemax="92"
+            aria-valuenow="50" tabindex="0">
             <div class="curtain-layer layer-batana">
               <span class="layer-badge badge-batana">ناتج بتانة ✓</span>
               <div class="word-page-mockup" id="batanaPageContent"></div>
@@ -348,7 +358,7 @@
             <div class="curtain-divider" id="curtainDivider">
               <div class="curtain-knob" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-                  <path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/>
+                  <path d="M8 7l-5 5 5 5M16 7l5 5-5 5" />
                 </svg>
               </div>
             </div>
@@ -357,7 +367,9 @@
           <div class="device-toolbar">
             <div class="sample-tabs" id="sampleTabs"></div>
             <div class="drag-hint">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 7l-5 5 5 5M16 7l5 5-5 5" />
+              </svg>
               <span>اسحب الفاصل للمقارنة</span>
             </div>
           </div>
@@ -371,24 +383,28 @@
         <div class="center-head reveal">
           <div class="kicker">كيف يعمل بتانة؟</div>
           <h2 class="h2-title">ثلاث خطوات بسيطة. وهندسة عربية متخصصة.</h2>
-          <p class="lead-copy">لا نحول النص الرقمي إلى صور ثم نخمّنه — بل نقرأ بنية الـ <span class="ltr">PDF</span> الأصلية ونعيد بناءها كمستند <span class="ltr">Word</span> حقيقي.</p>
+          <p class="lead-copy">لا نحول النص الرقمي إلى صور ثم نخمّنه — بل نقرأ بنية الـ <span class="ltr">PDF</span>
+            الأصلية ونعيد بناءها كمستند <span class="ltr">Word</span> حقيقي.</p>
         </div>
 
         <div class="steps-grid reveal">
           <article class="step-card">
             <div class="step-num">01</div>
             <h3>ارفع ملف الـ <span class="ltr">PDF</span></h3>
-            <p>اسحب أي كتاب عربي أو تقرير أو ورقة علمية (حتى 20 ميجابايت)، واختر «تلقائي ذكي» أو النمط الأنسب لمستندك.</p>
+            <p>اسحب أي كتاب عربي أو تقرير أو ورقة علمية (حتى 50 ميجابايت و 600 صفحة)، واختر «تلقائي ذكي» أو النمط الأنسب لمستندك.
+            </p>
           </article>
           <article class="step-card">
             <div class="step-num">02</div>
             <h3>إعادة بناء بلا <span class="ltr">OCR</span></h3>
-            <p>يعالج المحرك ترتيب القراءة المنطقي، الحروف المتصلة، التشكيل، الأقواس ثنائية الاتجاه، والجداول والحواشي تلقائياً.</p>
+            <p>يعالج المحرك ترتيب القراءة المنطقي، الحروف المتصلة، التشكيل، الأقواس ثنائية الاتجاه، والجداول والحواشي
+              تلقائياً.</p>
           </article>
           <article class="step-card">
             <div class="step-num">03</div>
             <h3>حمّل ملف <span class="ltr">Word</span> وقيّمه</h3>
-            <p>استلم ملف <span class="ltr">DOCX</span> جاهزاً للتعديل فوراً، وشاركنا تقييمك وملاحظاتك لتحسين دقة المحرك في كل إصدار.</p>
+            <p>استلم ملف <span class="ltr">DOCX</span> جاهزاً للتعديل فوراً، وشاركنا تقييمك وملاحظاتك لتحسين دقة المحرك
+              في كل إصدار.</p>
           </article>
         </div>
 
@@ -413,7 +429,8 @@
 
         <div class="bottom-cta reveal">
           <h3>جاهز لتجربة ملفك الآن؟</h3>
-          <button type="button" class="btn-primary" id="bottomUploadBtn">ارفع ملف <span class="ltr">PDF</span> وابدأ التحويل</button>
+          <button type="button" class="btn-primary" id="bottomUploadBtn">ارفع ملف <span class="ltr">PDF</span> وابدأ
+            التحويل</button>
         </div>
       </div>
     </section>
@@ -422,7 +439,8 @@
   <footer class="site-footer">
     <div class="wrap footer-row">
       <div class="footer-brand">
-        <strong>بتانة (Batana)</strong> — تحويل ملفات <span class="ltr">PDF</span> العربية إلى <span class="ltr">Word</span> بدون <span class="ltr">OCR</span>.
+        <strong>بتانة (Batana)</strong> — تحويل ملفات <span class="ltr">PDF</span> العربية إلى <span
+          class="ltr">Word</span> بدون <span class="ltr">OCR</span>.
       </div>
       <div class="footer-links">
         <a href="#converter">حوّل ملفك</a>
@@ -434,4 +452,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>

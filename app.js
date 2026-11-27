@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  const MAX_FILE_BYTES = 20 * 1024 * 1024; // 20 MB
+  const MAX_FILE_BYTES = 50 * 1024 * 1024; // 50 MB
   const DIRECT_UPLOAD_LIMIT = 3.8 * 1024 * 1024; // 3.8 MB direct; > 3.8 MB uses private Vercel Blob
 
   const MODE_HINTS = {
@@ -228,7 +228,7 @@
 
   function revokeLastBlob() {
     if (state.lastJob && state.lastJob.blobUrl) {
-      try { URL.revokeObjectURL(state.lastJob.blobUrl); } catch (_) {}
+      try { URL.revokeObjectURL(state.lastJob.blobUrl); } catch (_) { }
     }
   }
 
@@ -250,7 +250,7 @@
       return;
     }
     if (file.size > MAX_FILE_BYTES) {
-      setAlert(els.uploadAlert, 'حجم الملف يتجاوز 20 ميجابايت. يرجى اختيار ملف أصغر.');
+      setAlert(els.uploadAlert, 'حجم الملف يتجاوز 50 ميجابايت. يرجى اختيار ملف أصغر.');
       return;
     }
 
@@ -403,7 +403,7 @@
         try {
           const errJson = await response.json();
           if (errJson && errJson.detail) msg = errJson.detail;
-        } catch (_) {}
+        } catch (_) { }
         throw new Error(msg);
       }
 
@@ -417,7 +417,7 @@
       const fallbackOutName = file.name.replace(/\.pdf$/i, '') + '.docx';
       let outputName = fallbackOutName;
       if (encodedOutName) {
-        try { outputName = decodeURIComponent(encodedOutName); } catch (_) {}
+        try { outputName = decodeURIComponent(encodedOutName); } catch (_) { }
       }
 
       revokeLastBlob();
@@ -476,14 +476,7 @@
 
     const secsText = job.durationMs > 0 ? `${(job.durationMs / 1000).toFixed(1)} ثانية` : 'تحويل سريع';
     const pagesText = job.pages > 0 ? `${job.pages} صفحة` : 'مستند نصي';
-    els.resultMetaLine.textContent = '';
-    const nameSpan = document.createElement('span');
-    nameSpan.dir = 'auto';
-    nameSpan.style.unicodeBidi = 'isolate';
-    nameSpan.style.fontWeight = '600';
-    nameSpan.textContent = job.outputName;
-    els.resultMetaLine.appendChild(nameSpan);
-    els.resultMetaLine.appendChild(document.createTextNode(` · ${pagesText} · ${secsText}`));
+    els.resultMetaLine.textContent = `${job.outputName} · ${pagesText} · ${secsText}`;
     els.resultJobId.textContent = job.jobId;
 
     resetRatingState();

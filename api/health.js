@@ -8,7 +8,8 @@ export async function GET() {
         status: 'degraded',
         engine_reachable: false,
         blob_configured: blobConfigured,
-        max_mb: 20,
+        max_mb: 50,
+        max_pages: 600,
       },
       { status: 503 }
     );
@@ -25,7 +26,8 @@ export async function GET() {
           status: 'degraded',
           engine_reachable: false,
           blob_configured: blobConfigured,
-          max_mb: 20,
+          max_mb: 50,
+          max_pages: 600,
         },
         { status: 503 }
       );
@@ -36,8 +38,8 @@ export async function GET() {
       engine_reachable: true,
       blob_configured: blobConfigured,
       drive_configured: Boolean(data.drive_configured),
-      max_mb: data.max_mb || 20,
-      max_pages: data.max_pages || 200,
+      max_mb: data.max_mb || 50,
+      max_pages: data.max_pages || 600,
     });
   } catch (error) {
     console.error('Health check failed:', error);
@@ -46,7 +48,8 @@ export async function GET() {
         status: 'degraded',
         engine_reachable: false,
         blob_configured: blobConfigured,
-        max_mb: 20,
+        max_mb: 50,
+        max_pages: 600,
       },
       { status: 503 }
     );

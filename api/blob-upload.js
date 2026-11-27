@@ -1,7 +1,7 @@
 import { handleUpload } from '@vercel/blob/client';
 import { metric } from '@vercel/functions';
 
-const MAX_UPLOAD_BYTES = 20 * 1024 * 1024; // 20 MB
+const MAX_UPLOAD_BYTES = 50 * 1024 * 1024; // 50 MB
 
 export async function POST(request) {
   let body;
