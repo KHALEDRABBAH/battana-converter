@@ -476,7 +476,14 @@
 
     const secsText = job.durationMs > 0 ? `${(job.durationMs / 1000).toFixed(1)} ثانية` : 'تحويل سريع';
     const pagesText = job.pages > 0 ? `${job.pages} صفحة` : 'مستند نصي';
-    els.resultMetaLine.textContent = `${job.outputName} · ${pagesText} · ${secsText}`;
+    els.resultMetaLine.textContent = '';
+    const nameSpan = document.createElement('span');
+    nameSpan.dir = 'auto';
+    nameSpan.style.unicodeBidi = 'isolate';
+    nameSpan.style.fontWeight = '600';
+    nameSpan.textContent = job.outputName;
+    els.resultMetaLine.appendChild(nameSpan);
+    els.resultMetaLine.appendChild(document.createTextNode(` · ${pagesText} · ${secsText}`));
     els.resultJobId.textContent = job.jobId;
 
     resetRatingState();
